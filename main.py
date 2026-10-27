@@ -139,7 +139,7 @@ def build_video(scenes):
         clip = WORK / f"c{i}.mp4"
         print(f"Scene {i + 1}/{len(scenes)}")
         make_image(s["image_prompt"], img, seed=int(time.time()) + i)
-        asyncio.run(make_voice(s["narration"], aud))
+        make_voice(s["narration"], aud)
         make_clip(img, aud, clip)
         clips.append(clip)
     listing = WORK / "list.txt"
