@@ -83,8 +83,24 @@ def make_image(prompt, path, seed):
     raise RuntimeError(f"Image generation failed: {last}")
 
 
-async def make_voice(text, path):
+async def _edge_voice(text, path):
     await edge_tts.Communicate(text, VOICE).save(str(path))
+
+
+def make_voice(text, path):
+    # 1) edge-tts, retried because Microsoft's free service fails randomly
+    for attempt in range(4):
+        try:
+            asyncio.run(_edge_voice(text, path))
+            if path.exists() and path.stat().st_size > 1000:
+                return
+        except Exception as e:
+            print(f"edge-tts attempt {attempt + 1} failed: {e}")
+        time.sleep(5 * (attempt + 1))
+    # 2) backup voice: Google gTTS
+    from gtts import gTTS
+    print("Falling back to gTTS")
+    gTTS(text=text, lang="en").save(str(path))
 
 
 def duration(path):
