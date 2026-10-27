@@ -21,7 +21,7 @@ WORK = pathlib.Path("work")
 HISTORY = pathlib.Path("history.json")
 
 GEMINI_KEY = os.environ["GEMINI_API_KEY"]
-GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.0-flash")
+GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-3.5-flash-lite")
 NICHE = os.getenv("VIDEO_NICHE", "gaming facts, secrets, and short stories about popular video games")
 VOICE = os.getenv("VOICE", "en-US-GuyNeural")
 PRIVACY = os.getenv("PRIVACY", "public")  # public | unlisted | private
